@@ -1,0 +1,30 @@
+.home-container {
+  text-align: center;
+  font-family: Arial, sans-serif;
+  background-color: #f5f7fa;
+  height: 100vh;
+  padding: 2rem;
+}
+
+.home-header {
+  margin-bottom: 4rem;
+}
+
+.home-button {
+  background-color: #2e86de;
+  color: white;
+  padding: 0.75rem 2rem;
+  text-decoration: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  margin-right: 1rem;
+}
+
+.home-button-outline {
+  border: 2px solid #2e86de;
+  color: #2e86de;
+  padding: 0.75rem 2rem;
+  text-decoration: none;
+  border-radius: 6px;
+  font-size: 1rem;
+}
