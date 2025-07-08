@@ -1,28 +1,59 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
 
-export default function Dashboard() {
+function Dashboard() {
   const [courses, setCourses] = useState([]);
+  const [enrolledCourses, setEnrolledCourses] = useState([]);
 
   useEffect(() => {
-    const fetchCourses = async () => {
-      const res = await axios.get('http://localhost:5000/api/courses');
-      setCourses(res.data);
-    };
-    fetchCourses();
+    // Simulate fetching courses
+    const mockCourses = [
+      {
+        _id: "1",
+        title: "Java Basics",
+        description: "Learn the fundamentals of Java.",
+        instructor: { email: "admin@example.com" }
+      },
+      {
+        _id: "2",
+        title: "React for Beginners",
+        description: "Introduction to React.js.",
+        instructor: { email: "admin@example.com" }
+      }
+    ];
+
+    setCourses(mockCourses);
+
+    // Load previously enrolled course IDs from localStorage
+    const saved = JSON.parse(localStorage.getItem("enrolledCourses")) || [];
+    setEnrolledCourses(saved);
   }, []);
 
+  const handleEnroll = (courseId) => {
+    if (!enrolledCourses.includes(courseId)) {
+      const updated = [...enrolledCourses, courseId];
+      setEnrolledCourses(updated);
+      localStorage.setItem("enrolledCourses", JSON.stringify(updated));
+      alert("Enrolled successfully!");
+    } else {
+      alert("Already enrolled.");
+    }
+  };
+
   return (
-    <div className="p-10">
-      <h2 className="text-2xl mb-4">Courses</h2>
+    <div style={{ padding: "2rem" }}>
+      <h2>Available Courses</h2>
       {courses.map(course => (
-        <div key={course._id} className="border p-4 mb-2">
-          <h3 className="text-xl font-bold">{course.title}</h3>
+        <div key={course._id} style={{ border: "1px solid #ccc", margin: "1rem 0", padding: "1rem" }}>
+          <h3>{course.title}</h3>
           <p>{course.description}</p>
-          <Link to={`/course/${course._id}`} className="text-blue-600">View Course</Link>
+          <p><strong>Instructor:</strong> {course.instructor.email}</p>
+          <button onClick={() => handleEnroll(course._id)}>
+            {enrolledCourses.includes(course._id) ? "Enrolled" : "Enroll"}
+          </button>
         </div>
       ))}
     </div>
   );
 }
+
+export default Dashboard;
